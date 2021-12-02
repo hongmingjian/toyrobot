@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
             face = name_to_index(g_face_names, NR_ELEMENTS(g_face_names), q);
 
             if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0) {
-                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad argument %s\n", line_num, line); 
                 continue;
             }
 
