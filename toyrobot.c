@@ -60,6 +60,29 @@ static char *string_trim(char *s)
     return p;
 }
 
+/**
+ * Validate the range [q, p) for atoi
+ */
+static int validate_atoi(char *q, char *p)
+{
+    for(; q < p; q++)
+        if(!isblank(*q))
+            break;
+    for(; p > q; p--)
+        if(!isblank(*(p-1)))
+            break;
+    if(q == p)
+        return 0;
+
+    if(*q == '-' || *q == '+')
+        q++;
+    for(; q < p; q++) {
+        if(!isdigit(*q)) 
+            return 0;
+    }
+
+    return 1;
+}
 static void move(struct robot *r)
 {
     switch(r->face) {
@@ -138,7 +161,7 @@ int main(int argc, char *argv[])
             }
 
             p = strchr(q, ',');
-            if(!p) {
+            if(!p || !validate_atoi(q, p)) {
                 fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
                 continue;
             }
@@ -146,7 +169,7 @@ int main(int argc, char *argv[])
 
             q = p + 1; 
             p = strchr(q, ',');
-            if(!p) {
+            if(!p || !validate_atoi(q, p)) {
                 fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
                 continue;
             }
