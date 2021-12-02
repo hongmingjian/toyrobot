@@ -36,6 +36,30 @@ static int name_to_index(const char *names[], int n, char *name)
     return -1;
 }
 
+static char *string_trim(char *s)
+{
+    char *p = s;
+    char *q = s + strlen(s);
+    while(1) {
+        if(!*p)
+            break;
+        if(!isspace(*p))
+            break;
+        ++p;
+    }
+
+    while(1) {
+        if(q <= s)
+            break;
+        --q;
+        if(!isspace(*q))
+            break;
+        *q = '\0';
+    }
+
+    return p;
+}
+
 static void move(struct robot *r)
 {
     switch(r->face) {
@@ -99,28 +123,18 @@ int main(int argc, char *argv[])
 
     do {
         line_num++;
-        line = &buf[0];
 
         if(!fgets(&buf[0], NR_ELEMENTS(buf), stdin))
             break;
 
-        while(1) {
-            if(!*line)
-                break;
-            if(!isspace(*line))
-                break;
-            ++line;
-        }
-        if(!*line)
-            continue;
-
+        line = string_trim(&buf[0]);
         if(!strncmp(line, "PLACE", 5)) {
             char *q = line+5, *p;
 
             int x, y, face;
             p = strchr(q, ',');
             if(!p) {
-                fprintf(stderr, "Error:%d: Bad command %s", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
                 continue;
             }
             x = atoi(q);
@@ -128,7 +142,7 @@ int main(int argc, char *argv[])
             q = p + 1; 
             p = strchr(q, ',');
             if(!p) {
-                fprintf(stderr, "Error:%d: Bad command %s", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
                 continue;
             }
             y = atoi(q);
@@ -144,7 +158,7 @@ int main(int argc, char *argv[])
             face = name_to_index(g_face_names, NR_ELEMENTS(g_face_names), q);
 
             if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0) {
-                fprintf(stderr, "Error:%d: Bad command %s", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
                 continue;
             }
 
@@ -153,13 +167,13 @@ int main(int argc, char *argv[])
             robot1.face = face;
         } else {
             if(robot1.x < 0 || robot1.y < 0) {
-                fprintf(stderr, "Warning:%d: Ignoring command %s", line_num, line); 
+                fprintf(stderr, "Warning:%d: Ignoring command %s\n", line_num, line); 
                 continue;
             }
 
             int cmd = name_to_index(g_cmd_names, NR_ELEMENTS(g_cmd_names), line);
             if(cmd < 0) {
-                fprintf(stderr, "Error:%d: Unknown command %s", line_num, line);
+                fprintf(stderr, "Error:%d: Unknown command %s\n", line_num, line);
                 continue;
             }
 
