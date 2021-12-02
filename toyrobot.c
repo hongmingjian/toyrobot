@@ -129,9 +129,14 @@ int main(int argc, char *argv[])
 
         line = string_trim(&buf[0]);
         if(!strncmp(line, "PLACE", 5)) {
+            int x, y, face;
             char *q = line+5, *p;
 
-            int x, y, face;
+            if(!isblank(*q)) {
+                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
+                continue;
+            }
+
             p = strchr(q, ',');
             if(!p) {
                 fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
