@@ -156,13 +156,13 @@ int main(int argc, char *argv[])
             char *q = line+5, *p;
 
             if(!isblank(*q)) {
-                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line); 
                 continue;
             }
 
             p = strchr(q, ',');
             if(!p || !validate_atoi(q, p)) {
-                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line); 
                 continue;
             }
             x = atoi(q);
@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
             q = p + 1; 
             p = strchr(q, ',');
             if(!p || !validate_atoi(q, p)) {
-                fprintf(stderr, "Error:%d: Bad command %s\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line); 
                 continue;
             }
             y = atoi(q);
@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
             face = name_to_index(g_face_names, NR_ELEMENTS(g_face_names), q);
 
             if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0) {
-                fprintf(stderr, "Error:%d: Bad argument %s\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad argument \"%s\"\n", line_num, line); 
                 continue;
             }
 
@@ -195,13 +195,13 @@ int main(int argc, char *argv[])
             robot1.face = face;
         } else {
             if(robot1.x < 0 || robot1.y < 0) {
-                fprintf(stderr, "Warning:%d: Ignoring command %s\n", line_num, line); 
+                fprintf(stderr, "Warning:%d: Ignoring command \"%s\"\n", line_num, line); 
                 continue;
             }
 
             int cmd = name_to_index(g_cmd_names, NR_ELEMENTS(g_cmd_names), line);
             if(cmd < 0) {
-                fprintf(stderr, "Error:%d: Unknown command %s\n", line_num, line);
+                fprintf(stderr, "Error:%d: Unknown command \"%s\"\n", line_num, line);
                 continue;
             }
 
