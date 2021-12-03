@@ -3,8 +3,8 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-def p_error(t):
-    print("%d: Syntax error '%s'" % (t.lexer.lineno, t.value))
+def p_error(p):
+    print("%d: Syntax error '%s'" % (p.lexer.lineno, p.value))
     pass
 
 tokens = (
@@ -59,7 +59,7 @@ def TRLexer():
         elif t.value in faces:
             t.type = 'FACE'
         else:
-            #print("%d: Unknown token '%s'" % (t.lexer.lineno, t.value))
+            print("%d: Unknown token '%s'" % (t.lexer.lineno, t.value))
             pass
 
         return t
