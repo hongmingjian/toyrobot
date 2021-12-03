@@ -78,7 +78,7 @@ def TRParser(robot, data):
         face = p[2][2]
 
         if x < 0 or x >= 5 or y < 0 or y >= 5 or (face not in faces):
-            print('Ignoring %s' % str(p[1:]))
+            print('%d: Bad argument %s' % (p.lineno(1), str(p[2])))
             return
 
         robot[0] = x
@@ -88,7 +88,7 @@ def TRParser(robot, data):
     def p_ll2(p):
         'line : KEYWORD'
         if robot[0] < 0 or robot[0] >= 5 or robot[1] < 0 or robot[1] >= 5 or robot[2] not in faces:
-            print('Ignoring %s' % str(p[1:]))
+            print('%d: Ignoring "%s"' % (p.lineno(1), p[1]))
             return
 
         if p[1] == 'REPORT':
@@ -125,7 +125,8 @@ def TRParser(robot, data):
             elif robot[2] == 'WEST':
                 robot[2] = 'NORTH'
         else:
-            print('Ignoring %s' % str(p[1:]))
+            # XXX - p[1] must be PLACE
+            print('%d: Missing arguments "%s"' % (p.lineno(1), p[1]))
 
     def p_lt2(p):
         'term : NUMBER "," NUMBER "," FACE'
