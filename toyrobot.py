@@ -3,15 +3,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-t_ignore  = ' \t'
-def t_error(t):
-    print("%d: Illegal character '%s'" % (t.value[0], t.lexer.lineno))
-    pass
-
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
-
 def p_error(t):
     print("%d: Syntax error '%s'" % (t.lexer.lineno, t.value))
     pass
@@ -42,6 +33,16 @@ faces = (
 def TRLexer():
     t_COMMA = r','
 
+    t_ignore  = ' \t'
+
+    def t_error(t):
+        print("%d: Illegal character '%s'" % (t.value[0], t.lexer.lineno))
+        pass
+
+    def t_newline(t):
+        r'\n+'
+        t.lexer.lineno += len(t.value)
+
     def t_NUMBER(t):
         r'[+-]?\d+'
         try:
@@ -66,8 +67,6 @@ def TRLexer():
     return lex.lex()
 
 def TRParser(robot, data):
-
-    output = []
 
     def p_lp1(p):
         'lines : lines line'
@@ -128,7 +127,7 @@ def TRParser(robot, data):
             elif robot[2] == 'WEST':
                 robot[2] = 'NORTH'
         else:
-            print(p[1:])
+            print('Ignoring %s' % str(p[1:]))
 
     def p_lt2(p):
         'term : number COMMA number COMMA FACE'
@@ -139,7 +138,7 @@ def TRParser(robot, data):
         p[0] = p[1]
 
     yacc.yacc(debug=0, write_tables=0).parse(input=data, lexer=TRLexer())
-    return output
+    return
 
 if __name__=='__main__':
 
