@@ -5,18 +5,19 @@ import ply.yacc as yacc
 
 t_ignore  = ' \t'
 def t_error(t):
-    if t.value[0] in ('\r', '\n'):
-        t.lexer.skip(1)
-    else:
-        #print("Illegal character '%s'" % t.value[0])
-        t.lexer.skip(1)
-        pass
+    print("%d: Illegal character '%s'" % (t.value[0], t.lexer.lineno))
+    pass
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 def p_error(t):
-    #print(t)
+    #print("%d: Syntax error '%s'" % (t.lexer.lineno, t.value))
     pass
 
 tokens = (
+    'ID',
     'KEYWORD',
     'FACE',
     'NUMBER',
@@ -50,12 +51,15 @@ def TRLexer():
             t.value = -1
         return t
 
-    def t_FACE(t):
-        r'[A-Z][A-Z]*'
+    def t_ID(t):
+        r'[^ \t\n,]+'
         if t.value in keywords:
             t.type = 'KEYWORD'
         elif t.value in faces:
             t.type = 'FACE'
+        else:
+            #print("%d: Unknown token '%s'" % (t.lexer.lineno, t.value))
+            pass
 
         return t
 
@@ -94,13 +98,13 @@ def TRParser(robot, data):
             print(robot[0], robot[1], robot[2])
         elif p[1] == 'MOVE':
             if robot[2] == 'NORTH':
-                if robot[1] < 4:
+                if robot[1] < (5-1):
                     robot[1] += 1
             elif robot[2] == 'SOUTH':
                 if robot[1] > 0:
                     robot[1] -= 1
             elif robot[2] == 'EAST':
-                if robot[0] < 4:
+                if robot[0] < (5-1):
                     robot[0] += 1
             elif robot[2] == 'WEST':
                 if robot[0] > 0:
