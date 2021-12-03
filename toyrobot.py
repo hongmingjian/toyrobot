@@ -12,7 +12,6 @@ tokens = (
     'KEYWORD',
     'FACE',
     'NUMBER',
-    'COMMA',
 )
 
 keywords = (
@@ -31,9 +30,8 @@ faces = (
 )
 
 def TRLexer():
-    t_COMMA = r','
-
-    t_ignore  = ' \t'
+    literals = [',']
+    t_ignore = ' \t'
 
     def t_error(t):
         print("%d: Illegal character '%s'" % (t.value[0], t.lexer.lineno))
@@ -130,12 +128,8 @@ def TRParser(robot, data):
             print('Ignoring %s' % str(p[1:]))
 
     def p_lt2(p):
-        'term : number COMMA number COMMA FACE'
+        'term : NUMBER "," NUMBER "," FACE'
         p[0] = (p[1], p[3], p[5])
-
-    def p_lf1(p):
-        'number : NUMBER'
-        p[0] = p[1]
 
     yacc.yacc(debug=0, write_tables=0).parse(input=data, lexer=TRLexer())
     return
