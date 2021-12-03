@@ -4,12 +4,12 @@ Toy Robot
 
 ## How to run
 
->>> make test
+	`make test`
 
-You need to install ply to run the python version
+You need to install [ply](https://www.dabeaz.com/ply/) to run the python version
 
->>> pip install ply
+	`pip install ply`
 
-## NOTES
+## Notes
 
 Only tested on MacOS and Linux.
