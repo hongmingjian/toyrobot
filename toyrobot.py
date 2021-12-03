@@ -12,6 +12,7 @@ tokens = (
     'ACTION',
     'FACE',
     'NUMBER',
+    'NEWLINE',
 )
 
 actions = (
@@ -40,6 +41,9 @@ def TRLexer():
     def t_newline(t):
         r'\n+'
         t.lexer.lineno += len(t.value)
+        t.type = 'NEWLINE'
+
+        return t
 
     def t_NUMBER(t):
         r'[+-]?\d+'
@@ -66,10 +70,10 @@ def TRLexer():
 
 def TRParser(robot, data):
 
-    def p_lp1(p):
-        'lines : lines line'
     def p_lp2(p):
-        'lines : line'
+        "lines : line NEWLINE"
+    def p_lp1(p):
+        "lines : lines line NEWLINE"
 
     def p_ll1(p):
         'line : ACTION term'
