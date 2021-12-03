@@ -13,7 +13,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def p_error(t):
-    #print("%d: Syntax error '%s'" % (t.lexer.lineno, t.value))
+    print("%d: Syntax error '%s'" % (t.lexer.lineno, t.value))
     pass
 
 tokens = (
