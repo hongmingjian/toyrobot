@@ -9,12 +9,12 @@ def p_error(t):
 
 tokens = (
     'ID',
-    'KEYWORD',
+    'ACTION',
     'FACE',
     'NUMBER',
 )
 
-keywords = (
+actions = (
     'PLACE',
     'MOVE',
     'LEFT',
@@ -52,8 +52,8 @@ def TRLexer():
 
     def t_ID(t):
         r'[^ \t\n,]+'
-        if t.value in keywords:
-            t.type = 'KEYWORD'
+        if t.value in actions:
+            t.type = 'ACTION'
         elif t.value in faces:
             t.type = 'FACE'
         else:
@@ -72,7 +72,7 @@ def TRParser(robot, data):
         'lines : line'
 
     def p_ll1(p):
-        'line : KEYWORD term'
+        'line : ACTION term'
         x = p[2][0]
         y = p[2][1]
         face = p[2][2]
@@ -86,7 +86,7 @@ def TRParser(robot, data):
         robot[2] = face
 
     def p_ll2(p):
-        'line : KEYWORD'
+        'line : ACTION'
         if robot[0] < 0 or robot[0] >= 5 or robot[1] < 0 or robot[1] >= 5 or robot[2] not in faces:
             print('%d: Ignoring "%s"' % (p.lineno(1), p[1]))
             return
