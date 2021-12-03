@@ -90,7 +90,7 @@ def TRParser(robot, data):
 
     def p_ll2(p):
         'line : KEYWORD'
-        if robot[0] < 0 or robot[1] < 0 or robot[2] not in faces:
+        if robot[0] < 0 or robot[0] >= 5 or robot[1] < 0 or robot[1] >= 5 or robot[2] not in faces:
             print('Ignoring %s' % str(p[1:]))
             return
 
