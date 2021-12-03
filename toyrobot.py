@@ -139,12 +139,9 @@ def TRParser(robot, data):
 
 if __name__=='__main__':
 
+    import sys
+
     robot = [-1, -1, 'NORTH'] #XXX [0] -> x, [1] -> y, [2] -> face
 
-    try:
-        with open('cmds.txt', 'rt') as f:
-            text = f.read()
-            TRParser(robot, text)
-
-    except (OSError, UnicodeDecodeError) as reason:
-        print(reason)
+    text = sys.stdin.read()
+    TRParser(robot, text)

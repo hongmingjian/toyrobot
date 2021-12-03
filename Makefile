@@ -6,6 +6,7 @@ toyrobot: toyrobot.c
 .PHONY: test
 test: toyrobot
 	cat cmds.txt | ./toyrobot	
+	cat cmds.txt | python toyrobot.py	
 
 .PHONY: clean
 clean:
