@@ -95,7 +95,7 @@ def TRParser(robot, data):
             return
 
         if p[1] == 'REPORT':
-            print(robot[0], robot[1], robot[2])
+            print('%d, %d, %s' % (robot[0], robot[1], robot[2]))
         elif p[1] == 'MOVE':
             if robot[2] == 'NORTH':
                 if robot[1] < (5-1):
