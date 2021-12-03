@@ -151,6 +151,9 @@ int main(int argc, char *argv[])
             break;
 
         line = string_trim(&buf[0]);
+		if(!*line)
+			continue;
+
         if(!strncmp(line, "PLACE", 5)) {
             int x, y, face;
             char *q = line+5, *p;
