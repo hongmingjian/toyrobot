@@ -39,7 +39,7 @@ def TRLexer():
         pass
 
     def t_newline(t):
-        r'\n+'
+        r'[\r\n]+'
         t.lexer.lineno += len(t.value)
         return t
 
@@ -53,7 +53,7 @@ def TRLexer():
         return t
 
     def t_ID(t):
-        r'[^ \t\n,]+'
+        r'[^ \t\r\n,]+'
         if t.value in actions:
             t.type = 'ACTION'
         elif t.value in faces:
