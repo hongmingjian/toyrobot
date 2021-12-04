@@ -14,9 +14,9 @@ struct robot {
 };
 
 const char *g_face_names[] = {
-    "NORTH", 
+    "NORTH",
     "WEST",
-    "SOUTH", 
+    "SOUTH",
     "EAST"
 };
 
@@ -65,14 +65,14 @@ static char *string_trim(char *q, char **pp)
  */
 static int validate_atoi(char *q, char *p)
 {
-	q = string_trim(q, &p);
+    q = string_trim(q, &p);
     if(q == p)
         return 0;
 
     if(*q == '-' || *q == '+')
         q++;
     for(; q < p; q++) {
-        if(!isdigit(*q)) 
+        if(!isdigit(*q))
             return 0;
     }
 
@@ -145,36 +145,36 @@ int main(int argc, char *argv[])
         if(!fgets(&buf[0], NR_ELEMENTS(buf), stdin))
             break;
 
-		endp = &buf[0] + strlen(buf);
-		line = string_trim(&buf[0], &endp);
-		if(line == endp)
-			continue;
-		*endp = '\0';
-			
+        endp = &buf[0] + strlen(buf);
+        line = string_trim(&buf[0], &endp);
+        if(line == endp)
+            continue;
+        *endp = '\0';
+
         if(!strncmp(line, "PLACE", 5)) {
             int x, y, face;
             char *q = line+5, *p;
 
             if(!isblank(*q)) {
-                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line);
                 continue;
             }
 
             p = strchr(q, ',');
             if(!p || !validate_atoi(q, p)) {
-                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line);
                 continue;
             }
             x = atoi(q);
 
-            q = p + 1; 
+            q = p + 1;
             p = strchr(q, ',');
             if(!p || !validate_atoi(q, p)) {
-                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad command \"%s\"\n", line_num, line);
                 continue;
             }
             y = atoi(q);
-            
+
             q = p + 1;
             while(1) {
                 if(!*q)
@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
             face = name_to_index(g_face_names, NR_ELEMENTS(g_face_names), q);
 
             if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0) {
-                fprintf(stderr, "Error:%d: Bad argument \"%s\"\n", line_num, line); 
+                fprintf(stderr, "Error:%d: Bad argument \"%s\"\n", line_num, line);
                 continue;
             }
 
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
             robot1.face = face;
         } else {
             if(robot1.x < 0 || robot1.x >= WIDTH || robot1.y < 0 || robot1.y >= HEIGHT) {
-                fprintf(stderr, "Warning:%d: Ignoring command \"%s\"\n", line_num, line); 
+                fprintf(stderr, "Warning:%d: Ignoring command \"%s\"\n", line_num, line);
                 continue;
             }
 
