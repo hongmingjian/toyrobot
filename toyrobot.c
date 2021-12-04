@@ -36,28 +36,28 @@ static int name_to_index(const char *names[], int n, char *name)
     return -1;
 }
 
-static char *string_trim(char *s)
+/**
+ * Trim the space in a string of range [q, *pp)
+ */
+static char *string_trim(char *q, char **pp)
 {
-    char *p = s;
-    char *q = s + strlen(s);
     while(1) {
-        if(!*p)
+        if(!*q)
             break;
-        if(!isspace(*p))
-            break;
-        ++p;
-    }
-
-    while(1) {
-        if(q <= s)
-            break;
-        --q;
         if(!isspace(*q))
             break;
-        *q = '\0';
+        ++q;
     }
 
-    return p;
+    while(1) {
+        if(*pp <= q)
+            break;
+        if(!isspace(*(*pp-1)))
+            break;
+        --(*pp);
+    }
+
+    return q;
 }
 
 /**
@@ -65,12 +65,7 @@ static char *string_trim(char *s)
  */
 static int validate_atoi(char *q, char *p)
 {
-    for(; q < p; q++)
-        if(!isblank(*q))
-            break;
-    for(; p > q; p--)
-        if(!isblank(*(p-1)))
-            break;
+	q = string_trim(q, &p);
     if(q == p)
         return 0;
 
@@ -140,7 +135,7 @@ void (*g_cmd_actions[])(struct robot *r) = {
 
 int main(int argc, char *argv[])
 {
-    char *line, buf[64];
+    char *line, buf[64], *endp;
     struct robot robot1 = {-1, -1, NORTH};
     int line_num = 0;
 
@@ -150,10 +145,12 @@ int main(int argc, char *argv[])
         if(!fgets(&buf[0], NR_ELEMENTS(buf), stdin))
             break;
 
-        line = string_trim(&buf[0]);
-		if(!*line)
+		endp = &buf[0] + strlen(buf);
+		line = string_trim(&buf[0], &endp);
+		if(line == endp)
 			continue;
-
+		*endp = '\0';
+			
         if(!strncmp(line, "PLACE", 5)) {
             int x, y, face;
             char *q = line+5, *p;
