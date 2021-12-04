@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
             robot1.y = y;
             robot1.face = face;
         } else {
-            if(robot1.x < 0 || robot1.y < 0) {
+            if(robot1.x < 0 || robot1.x >= WIDTH || robot1.y < 0 || robot1.y >= HEIGHT) {
                 fprintf(stderr, "Warning:%d: Ignoring command \"%s\"\n", line_num, line); 
                 continue;
             }
