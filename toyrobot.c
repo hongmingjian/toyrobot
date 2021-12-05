@@ -82,8 +82,8 @@ static int validate_atoi(char *q, char *p)
 static int place(struct robot *r, char *args)
 {
 	int x, y, face;
-
     char *q, *p, *endp = args + strlen(args);
+
 	q = string_trim(args, &endp);
     p = strchr(q, ',');
     if(!p || !validate_atoi(q, p)) {
@@ -213,12 +213,18 @@ int main(int argc, char *argv[])
         if(!fgets(&buf[0], NR_ELEMENTS(buf), stdin))
             break;
 
+		/*
+		 * Trim leading and trailing space (as defined by isspace)
+		 */
         endp = &buf[0] + strlen(buf);
         line = string_trim(&buf[0], &endp);
         if(line == endp)
             continue;
         *endp = '\0';
 
+		/*
+		 * Separate the command and its arguments
+		 */
 		p = line;
 		while(1) {
             if(!*p)
@@ -232,11 +238,18 @@ int main(int argc, char *argv[])
 			++p;
 		}
 
+		/*
+		 * Look up the command
+		 */
 		cmd = name_to_index(g_cmd_names, NR_ELEMENTS(g_cmd_names), line);
 		if(cmd < 0) {
             fprintf(stderr, "%d: Unknown command \"%s\"\n", line_num, line);
             continue;
         }
+
+		/*
+		 * Execute the command
+		 */
         switch(g_cmd_actions[cmd](&robot1, p)) {
 		case 0:
 			break;
