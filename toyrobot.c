@@ -81,10 +81,10 @@ static int validate_atoi(char *q, char *p)
 
 static int place(struct robot *r, char *args)
 {
-	int x, y, face;
+    int x, y, face;
     char *q, *p, *endp = args + strlen(args);
 
-	q = string_trim(args, &endp);
+    q = string_trim(args, &endp);
     p = strchr(q, ',');
     if(!p || !validate_atoi(q, p)) {
         return -2;
@@ -109,17 +109,17 @@ static int place(struct robot *r, char *args)
     r->y = y;
     r->face = face;
 
-	return 0;
+    return 0;
 }
 
 static int move(struct robot *r, char *args)
 {
-	if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
         return -1;
     }
-	if(*args) {
-		return -2;
-	}
+    if(*args) {
+        return -2;
+    }
 
     switch(r->face) {
     case NORTH:
@@ -140,34 +140,34 @@ static int move(struct robot *r, char *args)
         break;
     default:
 //        fprintf(stderr, "Wrong face value %d\n", r->face);
-		return -10;
+        return -10;
         break;
     }
-	return 0;
+    return 0;
 }
 
 static int left(struct robot *r, char *args)
 {
-	if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
         return -1;
     }
-	if(*args) {
-		return -2;
-	}
+    if(*args) {
+        return -2;
+    }
 
     r->face++;
     r->face %= NR_FACES;
-	return 0;
+    return 0;
 }
 
 static int right(struct robot *r, char *args)
 {
-	if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
         return -1;
     }
-	if(*args) {
-		return -2;
-	}
+    if(*args) {
+        return -2;
+    }
 
     /**
      * XXX - enum may be unsigned
@@ -177,24 +177,24 @@ static int right(struct robot *r, char *args)
         r->face += NR_FACES;
 
     r->face--;
-	return 0;
+    return 0;
 }
 
 static int report(struct robot *r, char *args)
 {
-	if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
         return -1;
     }
-	if(*args) {
-		return -2;
-	}
+    if(*args) {
+        return -2;
+    }
 
     printf("%d, %d, %s\n", r->x, r->y, g_face_names[r->face]);
-	return 0;
+    return 0;
 }
 
 int (*g_cmd_actions[])(struct robot *r, char *args) = {
-	place,
+    place,
     move,
     left,
     right,
@@ -213,56 +213,56 @@ int main(int argc, char *argv[])
         if(!fgets(&buf[0], NR_ELEMENTS(buf), stdin))
             break;
 
-		/*
-		 * Trim leading and trailing space (as defined by isspace)
-		 */
+        /*
+         * Trim leading and trailing space (as defined by isspace)
+         */
         endp = &buf[0] + strlen(buf);
         line = string_trim(&buf[0], &endp);
         if(line == endp)
             continue;
         *endp = '\0';
 
-		/*
-		 * Separate the command and its arguments
-		 */
-		p = line;
-		while(1) {
+        /*
+         * Separate the command and its arguments
+         */
+        p = line;
+        while(1) {
             if(!*p)
-				break;
-			if(isspace(*p))
-				break;
-			++p;
-		}
-		if(*p) {
-			*p = '\0';
-			++p;
-		}
+                break;
+            if(isspace(*p))
+                break;
+            ++p;
+        }
+        if(*p) {
+            *p = '\0';
+            ++p;
+        }
 
-		/*
-		 * Look up the command
-		 */
-		cmd = name_to_index(g_cmd_names, NR_ELEMENTS(g_cmd_names), line);
-		if(cmd < 0) {
+        /*
+         * Look up the command
+         */
+        cmd = name_to_index(g_cmd_names, NR_ELEMENTS(g_cmd_names), line);
+        if(cmd < 0) {
             fprintf(stderr, "%d: Unknown command \"%s\"\n", line_num, line);
             continue;
         }
 
-		/*
-		 * Execute the command
-		 */
+        /*
+         * Execute the command
+         */
         switch(g_cmd_actions[cmd](&robot1, p)) {
-		case 0:
-			break;
-		case -1:
-			printf("%d: Ignoring command %s\n", line_num, line);
-			break;
-		case -2:
-			printf("%d: Bad argument %s\n", line_num, line);
-			break;
-		default:
-			printf("%d: Unknown error %s\n", line_num, line);
-			break;
-		}
+        case 0:
+            break;
+        case -1:
+            printf("%d: Ignoring command %s\n", line_num, line);
+            break;
+        case -2:
+            printf("%d: Bad argument %s\n", line_num, line);
+            break;
+        default:
+            printf("%d: Unknown error %s\n", line_num, line);
+            break;
+        }
     } while(1);
 
     return 0;
