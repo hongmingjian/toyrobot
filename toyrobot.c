@@ -175,14 +175,7 @@ int main(int argc, char *argv[])
             }
             y = atoi(q);
 
-            q = p + 1;
-            while(1) {
-                if(!*q)
-                    break;
-                if(!isspace(*q))
-                    break;
-                q++;
-            }
+            q = string_trim(p+1, &endp);
             face = name_to_index(g_face_names, NR_ELEMENTS(g_face_names), q);
 
             if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0) {
