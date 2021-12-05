@@ -114,7 +114,7 @@ static int place(struct robot *r, char *args)
 
 static int move(struct robot *r, char *args)
 {
-    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT || r->face < 0 || r->face >= NR_FACES) {
         return -1;
     }
     if(*args) {
@@ -138,17 +138,13 @@ static int move(struct robot *r, char *args)
         if(r->x > 0)
             r->x--;
         break;
-    default:
-//        fprintf(stderr, "Wrong face value %d\n", r->face);
-        return -10;
-        break;
     }
     return 0;
 }
 
 static int left(struct robot *r, char *args)
 {
-    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT || r->face < 0 || r->face >= NR_FACES) {
         return -1;
     }
     if(*args) {
@@ -162,7 +158,7 @@ static int left(struct robot *r, char *args)
 
 static int right(struct robot *r, char *args)
 {
-    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT || r->face < 0 || r->face >= NR_FACES) {
         return -1;
     }
     if(*args) {
@@ -182,7 +178,7 @@ static int right(struct robot *r, char *args)
 
 static int report(struct robot *r, char *args)
 {
-    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT) {
+    if(r->x < 0 || r->x >= WIDTH || r->y < 0 || r->y >= HEIGHT || r->face < 0 || r->face >= NR_FACES) {
         return -1;
     }
     if(*args) {
