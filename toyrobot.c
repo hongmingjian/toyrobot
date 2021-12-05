@@ -31,7 +31,7 @@ const char *g_cmd_names[] = {
 static int name_to_index(const char *names[], int n, char *name)
 {
     for(int i = 0; i < n; i++)
-        if(!strncmp(names[i], name, strlen(names[i])))
+        if(!strcmp(names[i], name))
             return i;
     return -1;
 }
