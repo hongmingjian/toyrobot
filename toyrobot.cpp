@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
 			try {
 				x = std::stoi(m[1]);
 				y = std::stoi(m[2]);
-			} catch(std::out_of_range e) {
+			} catch(std::out_of_range &e) {
 				//std::cerr << e.what() << std::endl;
 				x = -1;
 				y = -1;
