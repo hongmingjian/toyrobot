@@ -114,8 +114,7 @@ int main(int argc, char *argv[])
 
 	std::string place_pattern("^\\s*PLACE\\s+([+-]?[0-9]+)\\s*,\\s*([+-]?[0-9]+)\\s*,");
 	place_pattern += "\\s*(";
-	place_pattern += std::accumulate(g_face_names.begin(), g_face_names.end(), 
-			std::string(), 
+	place_pattern += std::accumulate(g_face_names.begin(), g_face_names.end(), std::string(), 
 			[](const std::string &a, const std::string &b){return a+(a.empty()?"":"|")+b;});
 	place_pattern += ")\\s*$";
 
