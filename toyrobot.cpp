@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 				x = std::stoi(m[1]);
 				y = std::stoi(m[2]);
 			} catch(std::out_of_range e) {
-				//std::cout << e.what() << std::endl;
+				//std::cerr << e.what() << std::endl;
 				x = -1;
 				y = -1;
 			}
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
 			}
 
 			if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0 || face >= g_face_names.size()) {
-				std::cout << lineno << ": " << "Bad argument: " << input << std::endl;
+				std::cerr << lineno << ": " << "Bad argument: " << input << std::endl;
 				continue;
 			}
 
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 						std::mem_fn(&ToyRobot::report)
 					};
 					if(!actions[i](robot)) {
-						std::cout << lineno << ": " << "Bad argument: " << input << std::endl;
+						std::cerr << lineno << ": " << "Bad argument: " << input << std::endl;
 					}
 
 					break;
@@ -172,7 +172,7 @@ int main(int argc, char *argv[])
 			}
 
 			if(!matched) {
-				std::cout << lineno << ": " << "Unknown command: " << input << std::endl;
+				std::cerr << lineno << ": " << "Unknown command: " << input << std::endl;
 			}
 		}
 	} while(1);
