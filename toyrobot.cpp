@@ -122,12 +122,12 @@ int main(int argc, char *argv[])
 
 		std::smatch m;
 
-		std::string pattern("\\s*PLACE\\s(\\s*[+-]?[0-9]+,)(\\s*[+-]?[0-9]+,)");
+		std::string pattern("^\\s*PLACE\\s(\\s*[+-]?[0-9]+,)(\\s*[+-]?[0-9]+,)");
 		pattern += "\\s*(";
 		for(auto name: g_face_names)
 			pattern += name + "|";
 		pattern.pop_back();
-		pattern += ")\\s*";
+		pattern += ")\\s*$";
 
 		if(std::regex_search(input, m, std::regex(pattern))) {
 			int x, y, face;
