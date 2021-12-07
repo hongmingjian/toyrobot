@@ -16,6 +16,7 @@ PLACE a,  b, EAST
 PLACE -1,-1, EAST
 PLACE +1,+1, EAST PLACE -1,+1, EAST
 PLACE   +1,  +1 , EAST1
+PLACE   +1	,  +2 , EAST
 PLACE   +1a,  +1 , EAST
 PLACE + 1,+1, EAST
 PLACE   ,   ,   
