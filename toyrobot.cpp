@@ -55,10 +55,10 @@ public:
 	    }
 
 	    switch(face) {
-	    case NORTH:
-	        if(y < HEIGHT-1)
-	            y++;
-	        break;
+		case NORTH:
+			if(y < HEIGHT-1)
+				y++;
+			break;
 		case SOUTH:
 			if(y > 0)
 				y--;
