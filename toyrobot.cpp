@@ -10,7 +10,6 @@ constexpr int NORTH = 0;
 constexpr int WEST = 1;
 constexpr int SOUTH = 2;
 constexpr int EAST = 3;
-constexpr int NR_FACES = 4;
 
 const std::array<std::string, 4> g_face_names ({
     "NORTH",
@@ -40,7 +39,7 @@ public:
 	}
 
 	bool place(int x, int y, int face) {
-		if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0 || face >= NR_FACES)
+		if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0 || face >= g_face_names.size())
 			return false;
 
 		this->x = x;
@@ -82,7 +81,7 @@ public:
 		}
 
 		face++;
-		face %= NR_FACES;
+		face %= g_face_names.size();
 		return true;
 	}
 
@@ -92,7 +91,7 @@ public:
 		}
 
 		if(!face)
-			face += NR_FACES;
+			face += g_face_names.size();
 
 		face--;
 		return true;
@@ -134,12 +133,12 @@ int main(int argc, char *argv[])
 			int x, y, face;
 			x = std::stoi(m[1]);
 			y = std::stoi(m[2]);
-			for(face = 0; face < NR_FACES; face++) {
+			for(face = 0; face < g_face_names.size(); face++) {
 				if(!m[3].compare(g_face_names[face]))
 					break;
 			}
 
-			if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0 || face >= NR_FACES) {
+			if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || face < 0 || face >= g_face_names.size()) {
 				std::cout << lineno << ": " << "Bad argument: " << input << std::endl;
 				continue;
 			}
