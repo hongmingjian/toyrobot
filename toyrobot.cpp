@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 {
 	ToyRobot robot;
 
-	std::string place_pattern("^\\s*PLACE\\s(\\s*[+-]?[0-9]+\\s*),(\\s*[+-]?[0-9]+\\s*),");
+	std::string place_pattern("^\\s*PLACE\\s+([+-]?[0-9]+)\\s*,\\s*([+-]?[0-9]+)\\s*,");
 	place_pattern += "\\s*(";
 	place_pattern += std::accumulate(g_face_names.begin(), g_face_names.end(), 
 			std::string(), 
