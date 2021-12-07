@@ -2,6 +2,7 @@
 #include <functional>
 #include <regex>
 #include <array>
+#include <numeric>
 
 constexpr int WIDTH = 5;
 constexpr int HEIGHT = 5;
@@ -113,9 +114,9 @@ int main(int argc, char *argv[])
 
 	std::string place_pattern("^\\s*PLACE\\s(\\s*[+-]?[0-9]+,)(\\s*[+-]?[0-9]+,)");
 	place_pattern += "\\s*(";
-	for(auto name: g_face_names)
-		place_pattern += name + "|";
-	place_pattern.pop_back();
+	place_pattern += std::accumulate(g_face_names.begin(), g_face_names.end(), 
+			std::string(), 
+			[](const std::string &a, const std::string &b){return a+(a.empty()?"":"|")+b;});
 	place_pattern += ")\\s*$";
 
 	int lineno = 0;
