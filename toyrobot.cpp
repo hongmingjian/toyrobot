@@ -111,6 +111,13 @@ int main(int argc, char *argv[])
 {
 	ToyRobot robot;
 
+	std::string place_pattern("^\\s*PLACE\\s(\\s*[+-]?[0-9]+,)(\\s*[+-]?[0-9]+,)");
+	place_pattern += "\\s*(";
+	for(auto name: g_face_names)
+		place_pattern += name + "|";
+	place_pattern.pop_back();
+	place_pattern += ")\\s*$";
+
 	int lineno = 0;
 	do {
 		lineno++;
@@ -121,15 +128,7 @@ int main(int argc, char *argv[])
 			break;
 
 		std::smatch m;
-
-		std::string pattern("^\\s*PLACE\\s(\\s*[+-]?[0-9]+,)(\\s*[+-]?[0-9]+,)");
-		pattern += "\\s*(";
-		for(auto name: g_face_names)
-			pattern += name + "|";
-		pattern.pop_back();
-		pattern += ")\\s*$";
-
-		if(std::regex_search(input, m, std::regex(pattern))) {
+		if(std::regex_search(input, m, std::regex(place_pattern))) {
 			int x, y, face;
 			x = std::stoi(m[1]);
 			y = std::stoi(m[2]);
