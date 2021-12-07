@@ -130,8 +130,15 @@ int main(int argc, char *argv[])
 		std::smatch m;
 		if(std::regex_search(input, m, std::regex(place_pattern))) {
 			int x, y, face;
-			x = std::stoi(m[1]);
-			y = std::stoi(m[2]);
+			try {
+				x = std::stoi(m[1]);
+				y = std::stoi(m[2]);
+			} catch(std::out_of_range e) {
+				//std::cout << e.what() << std::endl;
+				x = -1;
+				y = -1;
+			}
+
 			for(face = 0; face < g_face_names.size(); face++) {
 				if(!m[3].compare(g_face_names[face]))
 					break;
